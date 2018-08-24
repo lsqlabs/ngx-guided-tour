@@ -1,0 +1,73 @@
+{
+    "name": "ngx-guided-tour",
+    "version": "0.0.1",
+    "description": "Guided tour for your Angular6+ applications.",
+    "scripts": {
+        "tsc": "ngc -p tsconfig-aot.json",
+        "build": "gulp package",
+        "build:publish": "gulp publish",
+        "bump:build:publish": "gulp bumpVersionThenPublish"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lsqlabs/ngx-guided-tour.git"
+    },
+    "keywords": [
+        "guided",
+        "walkthrough",
+        "tour",
+        "angular",
+        "angular6",
+        "SASS",
+        "rxjs",
+        "customizable",
+        "ng",
+        "ngx",
+        "ng2"
+    ],
+    "author": {
+        "name": "lsqlabs",
+        "email": "developers@lsq.com"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/lsqlabs/ngx-guided-tour/issues"
+    },
+    "homepage": "https://github.com/lsqlabs/ngx-guided-tour#readme",
+    "peerDependencies": {
+        "@angular/core": "^6.0.0",
+        "bootstrap": "^4.0.0"
+    },
+    "devDependencies": {
+        "@angular/common": "^6.0.0",
+        "@angular/compiler": "^6.0.0",
+        "@angular/compiler-cli": "^6.0.0",
+        "@angular/core": "^6.0.0",
+        "@angular/forms": "^6.0.0",
+        "@angular/platform-browser": "^6.0.0",
+        "@angular/platform-browser-dynamic": "^6.0.0",
+        "@types/node": "^7.0.0",
+        "bootstrap": "^4.0.0",
+        "del": "^2.2.2",
+        "es6-shim": "^0.35.2",
+        "gulp": "^4.0.0",
+        "gulp-bump": "^3.1.1",
+        "gulp-file": "^0.3.0",
+        "gulp-rename": "^1.2.2",
+        "gulp-replace": "^0.5.4",
+        "gulp-sass": "^4.0.1",
+        "gulp-shell": "^0.5.1",
+        "gulp-tslint": "^7.0.1",
+        "gulp-typescript": "^3.1.4",
+        "gulp-uglify": "^2.0.0",
+        "node-sass-tilde-importer": "1.0.1",
+        "reflect-metadata": "0.1.9",
+        "rxjs": "^6.0.0",
+        "sinon": "^1.17.7",
+        "stylelint": "9.4.0",
+        "stylelint-scss": "3.2.0",
+        "systemjs": "0.19.42",
+        "typescript": "^2.1.5",
+        "zone.js": "^0.8.4"
+    }
+}
