@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, ViewEncapsulation, Input, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { fromEvent, Subscription } from 'rxjs';
 import { Orientation, TourStep } from './guided-tour.constants';
 import { GuidedTourService } from './guided-tour.service';
-import { fromEvent, Subscription } from 'rxjs';
 
 @Component({
     selector: 'ngx-guided-tour',
@@ -71,8 +71,8 @@ import { fromEvent, Subscription } from 'rxjs';
     encapsulation: ViewEncapsulation.None
 })
 export class GuidedTourComponent implements AfterViewInit, OnDestroy {
-    @Input() public topOfPageAdjustment? = 0;
-    @Input() public tourStepWidth? = 300;
+    @Input() public topOfPageAdjustment?= 0;
+    @Input() public tourStepWidth?= 300;
     @ViewChild('tourStep') public tourStep: ElementRef;
     public highlightPadding = 4;
     public currentTourStep: TourStep = null;
@@ -127,21 +127,39 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
             if (!this.isOrbShowing && !this.isTourOnScreen()) {
                 if (this.selectedElementRect && this.isBottom()) {
                     // Scroll so the element is on the top of the screen.
-                    window.scrollTo({
-                        left: null,
-                        top: ((window.scrollY + this.selectedElementRect.top) - this.topOfPageAdjustment)
-                        - (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0),
-                        behavior: 'smooth'
-                    });
+                    const topPos = ((window.scrollY + this.selectedElementRect.top) - this.topOfPageAdjustment)
+                        - (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0);
+                    try {
+                        window.scrollTo({
+                            left: null,
+                            top: topPos,
+                            behavior: 'smooth'
+                        });
+                    } catch (err) {
+                        if (err instanceof TypeError) {
+                            window.scroll(0, topPos);
+                        } else {
+                            throw err;
+                        }
+                    }
                 } else {
                     // Scroll so the element is on the bottom of the screen.
-                    window.scrollTo({
-                        left: null,
-                        top: (window.scrollY + this.selectedElementRect.top + this.selectedElementRect.height)
+                    const topPos = (window.scrollY + this.selectedElementRect.top + this.selectedElementRect.height)
                         - window.innerHeight
-                        + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0),
-                        behavior: 'smooth'
-                    });
+                        + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0);
+                    try {
+                        window.scrollTo({
+                            left: null,
+                            top: topPos,
+                            behavior: 'smooth'
+                        });
+                    } catch (err) {
+                        if (err instanceof TypeError) {
+                            window.scroll(0, topPos);
+                        } else {
+                            throw err;
+                        }
+                    }
                 }
             }
         });
