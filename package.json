@@ -1,6 +1,6 @@
 {
     "name": "ngx-guided-tour",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Guided tour for your Angular6+ applications.",
     "scripts": {
         "tsc": "ngc -p tsconfig-aot.json",
