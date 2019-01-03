@@ -148,6 +148,7 @@ ngx-guided-tour {
         }
 
         .tour-buttons {
+            overflow: hidden; // clearfix
 
             button.link-button {
                 padding-left: 0;
