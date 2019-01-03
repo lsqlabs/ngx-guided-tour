@@ -7,7 +7,7 @@ export interface TourStep {
     /** Tour step text */
     content: string;
     /** Where the tour step will appear next to the selected element */
-    orientation?: Orientation;
+    orientation?: Orientation | OrientationConfiguration[];
     /** Action that happens when the step is opened */
     action?: () => void;
     /** Action that happens when the step is closed */
@@ -29,6 +29,15 @@ export interface GuidedTour {
     skipCallback?: (stepSkippedOn: number) => void;
     /** Function will be called when tour is completed */
     completeCallback?: () => void;
+    /** Minimum size of screen in pixels before the tour is run, if the tour is resized below this value the user will be told to resize */
+    minimumScreenSize?: number;
+}
+
+export interface OrientationConfiguration {
+    /** Where the tour step will appear next to the selected element */
+    orientationDirection: Orientation,
+    /** When this orientation configuration starts in pixels */
+    maximumSize?: number
 }
 
 export class Orientation {

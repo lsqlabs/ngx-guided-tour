@@ -36,6 +36,8 @@ interface GuidedTour {
     skipCallback?: (stepSkippedOn: number) => void;
     /** Function will be called when tour is completed */
     completeCallback?: () => void;
+    /** Minimum size of screen in pixels before the tour is run, if the tour is resized below this value the user will be told to resize */
+    minimumScreenSize?: number;
 }
 ```
 
@@ -49,7 +51,7 @@ interface TourStep {
     /** Tour step text */
     content: string;
     /** Where the tour step will appear next to the selected element */
-    orientation?: Orientation;
+    orientation?: Orientation | OrientationConfiguration[];
     /** Action that happens when the step is opened */
     action?: () => void;
     /** Action that happens when the step is closed */
@@ -58,6 +60,16 @@ interface TourStep {
     scrollAdjustment?: number;
     /** Adds default padding around tour highlighting */
     useHighlightPadding?: boolean;
+}
+```
+
+Orientation configuration:
+```typescript
+interface OrientationConfiguration {
+    /** Where the tour step will appear next to the selected element */
+    orientationDirection: Orientation,
+    /** When this orientation configuration starts in pixels */
+    maximumSize?: number
 }
 ```
 
@@ -73,7 +85,7 @@ title (optional) - Title that shows on the top of the step.
 
 content - Content of the tourstep. Uses inner html so tags will work.
 
-orientation (optional) - Defaults to top. Accepts bottom, bottomLeft, bottomRight, center, left, right, top, topLeft, and topRight. Can be taken from the guided-tour.constants.ts file. 
+orientation (optional) - Defaults to top. Accepts bottom, bottomLeft, bottomRight, center, left, right, top, topLeft, and topRight. Can be taken from the guided-tour.constants.ts file. This also supports a array of OrientationConfiguration. When an array of OrientationConfiguration is passed to it, it will use the smallest maximumSize the screen can fit into. This is useful for tablet or mobile flexing. It will also change when the user resizes the screen.
 
 action (optional) - Function called at the beginning of step. This is executed before the tour step is rendered allowing for content to appear.
 
@@ -94,6 +106,8 @@ steps - List of TourSteps that the tour steps through.
 skipCallback (optional) - Function called when the tour is skipped. Passes the index of the step that was skipped on.
 
 completeCallback (optional) - Function is called when the tour is completed (done is pressed).
+
+minimumScreenSize (optional) - Will enforce a minimum size before the tour will start (in pixels). If the window is resized below this size during a tour a message will inform the user to expand their browser.
 
 ## ngx-guided-tour component inputs
 

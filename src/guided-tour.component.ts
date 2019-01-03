@@ -43,11 +43,12 @@ import { GuidedTourService } from './guided-tour.service';
                     </h2>
                     <div class="tour-content" [innerHTML]="currentTourStep.content"></div>
                     <div class="tour-buttons">
-                        <button (click)="guidedTourService.skipTour()"
+                        <button *ngIf="!guidedTourService.onResizeMessage"
+                            (click)="guidedTourService.skipTour()"
                             class="skip-button link-button">
                             Skip
                         </button>
-                        <button *ngIf="!guidedTourService.onLastStep"
+                        <button *ngIf="!guidedTourService.onLastStep && !guidedTourService.onResizeMessage"
                             class="next-button"
                             (click)="guidedTourService.nextStep()">
                             Next&nbsp;&nbsp;{{ guidedTourService.currentTourStepDisplay }}/{{ guidedTourService.currentTourStepCount }}
@@ -57,7 +58,13 @@ import { GuidedTourService } from './guided-tour.service';
                             (click)="guidedTourService.nextStep()">
                             Done
                         </button>
-                        <button *ngIf="!guidedTourService.onFirstStep"
+
+                        <button *ngIf="guidedTourService.onResizeMessage"
+                            class="next-button"
+                            (click)="guidedTourService.resetTour()">
+                            Close
+                        </button>
+                        <button *ngIf="!guidedTourService.onFirstStep && !guidedTourService.onResizeMessage"
                             class="back-button link-button"
                             (click)="guidedTourService.backStep()">
                             Back

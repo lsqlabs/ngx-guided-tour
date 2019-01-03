@@ -46,6 +46,7 @@
         "@angular/forms": "^6.0.0",
         "@angular/platform-browser": "^6.0.0",
         "@angular/platform-browser-dynamic": "^6.0.0",
+        "@types/lodash": "4.14.119",
         "@types/node": "^7.0.0",
         "bootstrap": "^4.0.0",
         "del": "^2.2.2",
@@ -69,5 +70,8 @@
         "systemjs": "0.19.42",
         "typescript": "^2.1.5",
         "zone.js": "^0.8.4"
+    },
+    "dependencies": {
+        "lodash": "4.17.11"
     }
 }
