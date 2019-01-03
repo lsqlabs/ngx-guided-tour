@@ -232,12 +232,13 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
     }
 
     public get topPosition(): number {
-        const paddingAdjustment = this.currentTourStep.useHighlightPadding ? this.highlightPadding : 0;
+        const paddingAdjustment = this.getHighlightPadding();
+
         if (this.isBottom()) {
             return this.selectedElementRect.top + this.selectedElementRect.height + paddingAdjustment;
         }
 
-        return this.selectedElementRect.top - paddingAdjustment;
+        return this.selectedElementRect.top - this.getHighlightPadding();
     }
 
     public get orbTopPosition(): number {
@@ -256,7 +257,8 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
     }
 
     public get leftPosition(): number {
-        const paddingAdjustment = this.currentTourStep.useHighlightPadding ? this.highlightPadding : 0;
+        const paddingAdjustment = this.getHighlightPadding();
+
         if (
             this.currentTourStep.orientation === Orientation.TopRight
             || this.currentTourStep.orientation === Orientation.BottomRight
@@ -350,29 +352,37 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
 
     public get overlayTop(): number {
         if (this.selectedElementRect) {
-            return this.currentTourStep.useHighlightPadding ? this.selectedElementRect.top - this.highlightPadding : this.selectedElementRect.top;
+            return this.selectedElementRect.top - this.getHighlightPadding();
         }
         return 0;
     }
 
     public get overlayLeft(): number {
         if (this.selectedElementRect) {
-            return this.currentTourStep.useHighlightPadding ? this.selectedElementRect.left - this.highlightPadding : this.selectedElementRect.left;
+            return this.selectedElementRect.left - this.getHighlightPadding();
         }
         return 0;
     }
 
     public get overlayHeight(): number {
         if (this.selectedElementRect) {
-            return this.currentTourStep.useHighlightPadding ? this.selectedElementRect.height + (this.highlightPadding * 2) : this.selectedElementRect.height;
+            return this.selectedElementRect.height + (this.getHighlightPadding() * 2);
         }
         return 0;
     }
 
     public get overlayWidth(): number {
         if (this.selectedElementRect) {
-            return this.currentTourStep.useHighlightPadding ? this.selectedElementRect.width + (this.highlightPadding * 2) : this.selectedElementRect.width;
+            return this.selectedElementRect.width + (this.getHighlightPadding() * 2);
         }
         return 0;
+    }
+
+    private getHighlightPadding(): number {
+        let paddingAdjustment = this.currentTourStep.useHighlightPadding ? this.highlightPadding : 0;
+        if (this.currentTourStep.highlightPadding) {
+            paddingAdjustment = this.currentTourStep.highlightPadding;
+        }
+        return paddingAdjustment;
     }
 }

@@ -60,8 +60,10 @@ interface TourStep {
     skipStep?: boolean;
     /** Adds some padding for things like sticky headers when scrolling to an element */
     scrollAdjustment?: number;
-    /** Adds default padding around tour highlighting */
+    /** Adds default padding around tour highlighting. Does not need to be true for highlightPadding to work */
     useHighlightPadding?: boolean;
+    /** Adds padding around tour highlighting in pixels, this overwrites the default for this step. Is not dependent on useHighlightPadding being true */
+    highlightPadding?: number;
 }
 ```
 
