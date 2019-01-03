@@ -12,6 +12,8 @@ export interface TourStep {
     action?: () => void;
     /** Action that happens when the step is closed */
     closeAction?: () => void;
+    /** Skips this step, this is so you do not have create multiple tour configurations based on user settings/configuration */
+    skipStep?: boolean;
     /** Adds some padding for things like sticky headers when scrolling to an element */
     scrollAdjustment?: number;
     /** Adds default padding around tour highlighting */

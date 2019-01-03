@@ -114,7 +114,8 @@ export class GuidedTourService {
     }
 
     public startTour(tour: GuidedTour): void {
-        this._currentTour = tour;
+        this._currentTour = cloneDeep(tour);
+        this._currentTour.steps = this._currentTour.steps.filter(step => !step.skipStep);
         this._currentTourStepIndex = 0;
         this._setFirstAndLast();
         this._guidedTourOrbShowingSubject.next(this._currentTour.useOrb);
