@@ -182,6 +182,10 @@ export class GuidedTourService {
         return this._currentTour && this._currentTour.steps ? this._currentTour.steps.length : 0;
     }
 
+    public get preventBackdropFromAdvancing(): boolean {
+        return this._currentTour && this._currentTour.preventBackdropFromAdvancing;
+    }
+
     private getPreparedTourStep(index: number): TourStep {
         return this.setTourOrientation(this._currentTour.steps[index]);
     }

@@ -15,7 +15,7 @@ import { GuidedTourService } from './guided-tour.service';
                 <div class="tour-orb-ring"></div>
         </div>
         <div *ngIf="currentTourStep && !isOrbShowing">
-            <div class="guided-tour-user-input-mask" (click)="preventBackdropClick($event)"></div>
+            <div class="guided-tour-user-input-mask" (click)="backdropClick($event)"></div>
             <div class="guided-tour-spotlight-overlay"
                 [style.top.px]="overlayTop"
                 [style.left.px]="overlayLeft"
@@ -207,8 +207,12 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
         }
     }
 
-    public preventBackdropClick(event: Event): void {
-        event.stopPropagation();
+    public backdropClick(event: Event): void {
+        if(this.guidedTourService.preventBackdropFromAdvancing) {
+            event.stopPropagation();
+        } else {
+            this.guidedTourService.nextStep();
+        }
     }
 
     public updateStepLocation(): void {
