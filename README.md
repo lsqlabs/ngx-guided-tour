@@ -113,6 +113,8 @@ completeCallback (optional) - Function is called when the tour is completed (don
 
 minimumScreenSize (optional) - Will enforce a minimum size before the tour will start (in pixels). If the window is resized below this size during a tour a message will inform the user to expand their browser.
 
+preventBackdropFromAdvancing (optional) - Prevents the tour from advancing by clicking the backdrop. This should only be set if you are completely sure your tour is displaying correctly on all screen sizes otherwise a user can get stuck.
+
 ## ngx-guided-tour component inputs
 
 topOfPageAdjustment (optional) - Used to adjust values to determine scroll. This is a blanket value to adjust for things like nav bars.
