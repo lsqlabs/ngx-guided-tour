@@ -135,7 +135,8 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
                 if (this.selectedElementRect && this.isBottom()) {
                     // Scroll so the element is on the top of the screen.
                     const topPos = ((window.scrollY + this.selectedElementRect.top) - this.topOfPageAdjustment)
-                        - (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0);
+                        - (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)
+                        + this.getStepScreenAdjustment();
                     try {
                         window.scrollTo({
                             left: null,
@@ -153,7 +154,8 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
                     // Scroll so the element is on the bottom of the screen.
                     const topPos = (window.scrollY + this.selectedElementRect.top + this.selectedElementRect.height)
                         - window.innerHeight
-                        + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0);
+                        + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)
+                        - this.getStepScreenAdjustment();
                     try {
                         window.scrollTo({
                             left: null,
@@ -196,12 +198,15 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
         }
         if (this.isBottom()) {
             return (
-                top >= (window.pageYOffset + this.topOfPageAdjustment + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0))
+                top >= (window.pageYOffset 
+                    + this.topOfPageAdjustment
+                    + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)
+                    + this.getStepScreenAdjustment())
                 && (top + height) <= (window.pageYOffset + window.innerHeight)
             );
         } else {
             return (
-                top >= (window.pageYOffset + this.topOfPageAdjustment)
+                top >= (window.pageYOffset + this.topOfPageAdjustment - this.getStepScreenAdjustment())
                 && (top + height + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)) <= (window.pageYOffset + window.innerHeight)
             );
         }
@@ -388,5 +393,23 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
             paddingAdjustment = this.currentTourStep.highlightPadding;
         }
         return paddingAdjustment;
+    }
+
+    // This calculates a value to add or subtract so the step should not be off screen.
+    private getStepScreenAdjustment(): number {
+        if (
+            this.currentTourStep.orientation === Orientation.Left
+            || this.currentTourStep.orientation === Orientation.Right
+        ) {
+            return 0;
+        }
+        const elementHeight = this.selectedElementRect.height
+            + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)
+            + this.tourStep.nativeElement.getBoundingClientRect().height;
+
+        if ((window.innerHeight - this.topOfPageAdjustment) < elementHeight) {
+            return elementHeight - (window.innerHeight - this.topOfPageAdjustment);
+        }
+        return 0;
     }
 }
