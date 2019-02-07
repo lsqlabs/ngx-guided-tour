@@ -1,0 +1,132 @@
+$tour-zindex: 1081 !default;
+$tour-step-color: #ffffff !default;
+$tour-text-color: #231f1f !default;
+$tour-next-button-color: #007bff !default;
+$tour-next-button-hover: #0069d9 !default;
+$tour-back-button-color: #007bff !default;
+$tour-next-text-color: #ffffff !default;
+$tour-next-text-hover: #ffffff !default;
+$tour-skip-link-color: #5e5e5e !default;
+$tour-orb-color: #625aff !default;
+$tour-shadow-color: #4c4c4c !default;
+
+body.tour-open {
+    overflow: hidden;
+}
+
+@mixin tour-triangle($direction, $color: currentColor, $size: 1rem) {
+
+    @if not index(top right bottom left, $direction) {
+        @error 'Direction must be either `top`, `right`, `bottom` or `left`.';
+    }
+
+    $opposite-direction: top;
+
+    @if $direction==top {
+        $opposite-direction: bottom;
+    }
+
+    @if $direction==bottom {
+        $opposite-direction: top;
+    }
+
+    @if $direction==right {
+        $opposite-direction: left;
+    }
+
+    @if $direction==left {
+        $opposite-direction: right;
+    }
+
+    width: 0;
+    height: 0;
+    content: '';
+    z-index: 2;
+    border-#{$opposite-direction}: $size solid $color;
+    $perpendicular-borders: $size solid transparent;
+    @if $direction==top or $direction==bottom {
+        border-left: $perpendicular-borders;
+        border-right: $perpendicular-borders;
+    }
+    @else if $direction==right or $direction==left {
+        border-bottom: $perpendicular-borders;
+        border-top: $perpendicular-borders;
+    }
+}
+
+ngx-guided-tour {
+    .guided-tour-user-input-mask {
+        z-index: $tour-zindex;
+    }
+
+    .guided-tour-spotlight-overlay {
+        z-index: $tour-zindex + 1;
+    }
+
+    .tour-orb {
+        z-index: $tour-zindex - 2;
+        background-color: $tour-orb-color;
+        box-shadow: 0 0 0.3rem 0.1rem $tour-orb-color;
+
+        .tour-orb-ring {
+            &::after {
+                border: 1rem solid $tour-orb-color;
+                box-shadow: 0 0 0.1rem 0.1rem $tour-orb-color;
+            }
+        }
+    }
+
+    .tour-step {
+        z-index: $tour-zindex + 2;
+
+        &.tour-bottom, &.tour-bottom-right, &.tour-bottom-left {
+            .tour-arrow::before {
+                @include tour-triangle(top, $tour-step-color);
+            }
+        }
+
+        &.tour-top, &.tour-top-right, &.tour-top-left {
+            .tour-arrow::before {
+                @include tour-triangle(bottom, $tour-step-color);
+            }
+        }
+
+        &.tour-left {
+            .tour-arrow::before {
+                @include tour-triangle(right, $tour-step-color);
+            }
+        }
+
+        &.tour-right {
+            .tour-arrow::before {
+                @include tour-triangle(left, $tour-step-color);
+            }
+        }
+
+        .tour-block {
+            color: $tour-text-color;
+            background-color: $tour-step-color;
+            box-shadow: 0 0.4rem 0.6rem $tour-shadow-color;
+        }
+
+        .tour-buttons {
+            button.skip-button {
+                color: $tour-skip-link-color;
+            }
+
+            .back-button {
+                color: $tour-back-button-color;
+            }
+
+            .next-button {
+                background-color: $tour-next-button-color;
+                color: $tour-next-text-color;
+                &:hover {
+                    background-color: $tour-next-button-hover;
+                    color: $tour-next-text-hover;
+                }
+            }
+        }
+    }
+
+}

@@ -1,0 +1,36 @@
+{
+  "name": "ngx-guided-tour",
+  "version": "1.1.1",
+  "description": "Guided tour for your Angular6+ applications.",
+  "peerDependencies": {
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0",
+    "bootstrap": "^4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lsqlabs/ngx-guided-tour.git"
+  },
+  "keywords": [
+    "guided",
+    "walkthrough",
+    "tour",
+    "angular",
+    "angular6",
+    "SASS",
+    "rxjs",
+    "customizable",
+    "ng",
+    "ngx",
+    "ng2"
+  ],
+  "author": {
+    "name": "lsqlabs",
+    "email": "developers@lsq.com"
+  },
+  "license": "MIT",
+  "bugs": {
+      "url": "https://github.com/lsqlabs/ngx-guided-tour/issues"
+  },
+  "homepage": "https://github.com/lsqlabs/ngx-guided-tour#readme"
+}
