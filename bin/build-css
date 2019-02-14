@@ -1,1 +1,0 @@
-node-sass ./projects/ngx-guided-tour/src/lib/guided-tour-base-theme.scss -o ./dist/ngx-guided-tour/css/guided-tour-base-theme.scss && node-sass ./projects/ngx-guided-tour/src/lib/guided-tour.component.scss -o ./dist/ngx-guided-tour/css/guided-tour.component.scss

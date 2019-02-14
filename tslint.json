@@ -117,7 +117,11 @@
       "check-separator",
       "check-type"
     ],
+<<<<<<< HEAD
     "no-output-on-prefix": false,
+=======
+    "no-output-on-prefix": true,
+>>>>>>> fcc8753f10109c22f366b51730f8c304aabb18f9
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,
@@ -125,7 +129,11 @@
     "no-output-rename": true,
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
+<<<<<<< HEAD
     "component-class-suffix": true,
+=======
+    "component-class-suffix": false,
+>>>>>>> fcc8753f10109c22f366b51730f8c304aabb18f9
     "directive-class-suffix": true
   }
 }

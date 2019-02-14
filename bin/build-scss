@@ -1,1 +1,0 @@
-scss-bundle -e ./projects/ngx-guided-tour/src/lib/guided-tour-base-theme.scss -d ./dist/ngx-guided-tour/scss/guided-tour-base-theme.scss && scss-bundle -e ./projects/ngx-guided-tour/src/lib/guided-tour.component.scss -d ./dist/ngx-guided-tour/scss/guided-tour.component.scss

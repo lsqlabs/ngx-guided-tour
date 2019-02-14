@@ -23,7 +23,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "projects/ngx-guided-tour/src/lib/guided-tour-base-theme.scss"
             ],
             "scripts": []
           },
