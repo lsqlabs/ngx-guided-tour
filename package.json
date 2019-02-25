@@ -65,7 +65,7 @@
         "reflect-metadata": "0.1.9",
         "rxjs": "^6.0.0",
         "sinon": "^1.17.7",
-        "stylelint": "9.4.0",
+        "stylelint": "^9.10.1",
         "stylelint-scss": "3.2.0",
         "systemjs": "0.19.42",
         "typescript": "^2.1.5",
