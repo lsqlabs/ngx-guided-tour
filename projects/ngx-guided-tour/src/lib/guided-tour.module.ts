@@ -1,20 +1,15 @@
-import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders, ErrorHandler } from '@angular/core';
-import { GuidedTourComponent } from './guided-tour.component';
 import { GuidedTourService } from './guided-tour.service';
-
-export * from './guided-tour.constants';
-export {
-    GuidedTourService,
-    GuidedTourComponent
-}
+import { GuidedTourComponent } from './guided-tour.component';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ModuleWithProviders } from '@angular/compiler/src/core';
 
 @NgModule({
-    imports: [
-        CommonModule
-    ],
     declarations: [
         GuidedTourComponent
+    ],
+    imports: [
+        CommonModule
     ],
     exports: [
         GuidedTourComponent
@@ -31,6 +26,6 @@ export class GuidedTourModule {
                 ErrorHandler,
                 GuidedTourService
             ]
-        }
+        };
     }
 }

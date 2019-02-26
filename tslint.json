@@ -1,4 +1,7 @@
 {
+    "extends": [
+        "tslint-eslint-rules"
+    ],
     "rules": {
         "arrow-return-shorthand": true,
         "callable-types": true,
@@ -64,6 +67,10 @@
         "no-unused-variable": true,
         "no-use-before-declare": true,
         "no-var-keyword": true,
+        "object-curly-spacing": [
+            true,
+            "always"
+        ],
         "object-literal-sort-keys": false,
         "one-line": [
             true,
