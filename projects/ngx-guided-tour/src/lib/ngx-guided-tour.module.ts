@@ -5,27 +5,27 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders } from '@angular/compiler/src/core';
 
 @NgModule({
-  declarations: [
-      GuidedTourComponent
+    declarations: [
+        GuidedTourComponent
     ],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    GuidedTourComponent
-  ],
-  entryComponents: [
-    GuidedTourComponent
-  ]
+    imports: [
+        CommonModule
+    ],
+    exports: [
+        GuidedTourComponent
+    ],
+    entryComponents: [
+        GuidedTourComponent
+    ]
 })
 export class NgxGuidedTourModule {
-  public static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: NgxGuidedTourModule,
-      providers: [
-        ErrorHandler,
-        GuidedTourService
-      ]
-    };
-  }
+    public static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: NgxGuidedTourModule,
+            providers: [
+                ErrorHandler,
+                GuidedTourService
+            ]
+        };
+    }
 }

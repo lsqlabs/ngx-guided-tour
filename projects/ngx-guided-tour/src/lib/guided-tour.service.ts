@@ -122,7 +122,7 @@ export class GuidedTourService {
         if (
             this._currentTour.steps.length > 0
             && (!this._currentTour.minimumScreenSize
-            || (window.innerWidth >= this._currentTour.minimumScreenSize))
+                || (window.innerWidth >= this._currentTour.minimumScreenSize))
         ) {
             if (!this._currentTour.useOrb) {
                 document.body.classList.add('tour-open');
