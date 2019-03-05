@@ -1,3 +1,5 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
 # compiled output
 /dist
 /tmp
@@ -5,6 +7,7 @@
 
 # dependencies
 /node_modules
+node_modules
 
 # IDEs and editors
 /.idea
@@ -35,11 +38,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-
-# e2e
-**/e2e/*.js
-**/e2e/*.map
-**/e2e/screenshots/actual
-**/e2e/screenshots/diff
-**/e2e/screenshots/reports
-**/e2e/downloads

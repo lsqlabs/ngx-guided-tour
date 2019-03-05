@@ -78,8 +78,8 @@ import { GuidedTourService } from './guided-tour.service';
     encapsulation: ViewEncapsulation.None
 })
 export class GuidedTourComponent implements AfterViewInit, OnDestroy {
-    @Input() public topOfPageAdjustment?= 0;
-    @Input() public tourStepWidth?= 300;
+    @Input() public topOfPageAdjustment ?= 0;
+    @Input() public tourStepWidth ?= 300;
     @ViewChild('tourStep') public tourStep: ElementRef;
     public highlightPadding = 4;
     public currentTourStep: TourStep = null;
@@ -198,7 +198,7 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
         }
         if (this.isBottom()) {
             return (
-                top >= (window.pageYOffset 
+                top >= (window.pageYOffset
                     + this.topOfPageAdjustment
                     + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)
                     + this.getStepScreenAdjustment())
@@ -213,7 +213,7 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
     }
 
     public backdropClick(event: Event): void {
-        if(this.guidedTourService.preventBackdropFromAdvancing) {
+        if (this.guidedTourService.preventBackdropFromAdvancing) {
             event.stopPropagation();
         } else {
             this.guidedTourService.nextStep();

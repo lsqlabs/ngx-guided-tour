@@ -35,7 +35,7 @@ export interface GuidedTour {
     completeCallback?: () => void;
     /** Minimum size of screen in pixels before the tour is run, if the tour is resized below this value the user will be told to resize */
     minimumScreenSize?: number;
-    /** 
+    /**
      * Prevents the tour from advancing by clicking the backdrop.
      * This should only be set if you are completely sure your tour is displaying correctly on all screen sizes otherwise a user can get stuck.
      */
@@ -44,9 +44,9 @@ export interface GuidedTour {
 
 export interface OrientationConfiguration {
     /** Where the tour step will appear next to the selected element */
-    orientationDirection: Orientation,
+    orientationDirection: Orientation;
     /** When this orientation configuration starts in pixels */
-    maximumSize?: number
+    maximumSize?: number;
 }
 
 export class Orientation {

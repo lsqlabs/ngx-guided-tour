@@ -1,19 +1,30 @@
 {
-    "version": "1.8.0",
+    "compileOnSave": false,
     "compilerOptions": {
-        "outDir": "build/es5",
-        "target": "es5",
-        "lib": ["es6", "dom"],
-        "module": "commonjs",
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "module": "es2015",
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "declaration": true
-    },
-    "exclude": [
-        "build",
-        "node_modules"
-    ]
+        "importHelpers": true,
+        "target": "es5",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2018",
+            "dom"
+        ],
+        "paths": {
+            "ngx-guided-tour": [
+                "dist/ngx-guided-tour"
+            ],
+            "ngx-guided-tour/*": [
+                "dist/ngx-guided-tour/*"
+            ]
+        }
+    }
 }

@@ -24,7 +24,7 @@ export class GuidedTourService {
         this.guidedTourOrbShowingStream = this._guidedTourOrbShowingSubject.asObservable();
 
         fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe(() => {
-            if(this._currentTour && this._currentTourStepIndex > -1) {
+            if (this._currentTour && this._currentTourStepIndex > -1) {
                 if (this._currentTour.minimumScreenSize && this._currentTour.minimumScreenSize >= window.innerWidth) {
                     this._onResizeMessage = true;
                     this._guidedTourCurrentStepSubject.next({
@@ -122,9 +122,9 @@ export class GuidedTourService {
         if (
             this._currentTour.steps.length > 0
             && (!this._currentTour.minimumScreenSize
-            || (window.innerWidth >= this._currentTour.minimumScreenSize))
+                || (window.innerWidth >= this._currentTour.minimumScreenSize))
         ) {
-            if(!this._currentTour.useOrb) {
+            if (!this._currentTour.useOrb) {
                 document.body.classList.add('tour-open');
             }
             if (this._currentTour.steps[this._currentTourStepIndex].action) {
@@ -191,10 +191,10 @@ export class GuidedTourService {
     }
 
     private setTourOrientation(step: TourStep): TourStep {
-        let convertedStep = cloneDeep(step);
+        const convertedStep = cloneDeep(step);
         if (
             convertedStep.orientation
-            && !(typeof convertedStep.orientation === "string")
+            && !(typeof convertedStep.orientation === 'string')
             && (convertedStep.orientation as OrientationConfiguration[]).length
         ) {
             (convertedStep.orientation as OrientationConfiguration[]).sort((a: OrientationConfiguration, b: OrientationConfiguration) => {
