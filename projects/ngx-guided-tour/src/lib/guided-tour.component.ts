@@ -31,7 +31,7 @@ import { GuidedTourService } from './guided-tour.service';
                 }"
                 [style.top.px]="(currentTourStep.selector && selectedElementRect ? topPosition : null)"
                 [style.left.px]="(currentTourStep.selector && selectedElementRect ? leftPosition : null)"
-                [style.width.px]="(currentTourStep.selector && selectedElementRect ? tourStepWidth : null)"
+                [style.width.px]="(currentTourStep.selector && selectedElementRect ? calculatedTourStepWidth : null)"
                 [style.transform]="(currentTourStep.selector && selectedElementRect ? transform : null)">
                 <div *ngIf="currentTourStep.selector" class="tour-arrow"></div>
                 <div class="tour-block">
@@ -80,6 +80,7 @@ import { GuidedTourService } from './guided-tour.service';
 export class GuidedTourComponent implements AfterViewInit, OnDestroy {
     @Input() public topOfPageAdjustment ?= 0;
     @Input() public tourStepWidth ?= 300;
+    @Input() public minimalTourStepWidth ?= 200;
     @ViewChild('tourStep') public tourStep: ElementRef;
     public highlightPadding = 4;
     public currentTourStep: TourStep = null;
@@ -93,6 +94,29 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
     constructor(
         public guidedTourService: GuidedTourService
     ) { }
+
+    private get maxWidthAdjustmentForTourStep(): number {
+        return this.tourStepWidth - this.minimalTourStepWidth;
+    }
+
+    private get widthAdjustmentForScreenBound(): number {
+        if (!this.tourStep) {
+            return 0;
+        }
+        let adjustment = 0;
+        if (this.calculatedLeftPosition < 0) {
+            adjustment = -this.calculatedLeftPosition;
+        }
+        if (this.calculatedLeftPosition > window.innerWidth - this.tourStepWidth) {
+            adjustment = this.calculatedLeftPosition - (window.innerWidth - this.tourStepWidth);
+        }
+
+        return Math.min(this.maxWidthAdjustmentForTourStep, adjustment);
+    }
+
+    public get calculatedTourStepWidth() {
+        return this.tourStepWidth - this.widthAdjustmentForScreenBound;
+    }
 
     public ngAfterViewInit(): void {
         this.guidedTourService.guidedTourCurrentStepStream.subscribe((step: TourStep) => {
@@ -265,7 +289,7 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
         return this.selectedElementRect.top;
     }
 
-    public get leftPosition(): number {
+    private get calculatedLeftPosition(): number {
         const paddingAdjustment = this.getHighlightPadding();
 
         if (
@@ -283,7 +307,7 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
         }
 
         if (this.currentTourStep.orientation === Orientation.Left) {
-            return (this.selectedElementRect.left - this.tourStepWidth - paddingAdjustment);
+            return this.selectedElementRect.left - this.tourStepWidth - paddingAdjustment;
         }
 
         if (this.currentTourStep.orientation === Orientation.Right) {
@@ -291,6 +315,15 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
         }
 
         return (this.selectedElementRect.right - (this.selectedElementRect.width / 2) - (this.tourStepWidth / 2));
+    }
+
+    public get leftPosition(): number {
+        if (this.calculatedLeftPosition >= 0) {
+            return this.calculatedLeftPosition;
+        }
+        const adjustment = Math.max(0, -this.calculatedLeftPosition)
+        const maxAdjustment = Math.min(this.maxWidthAdjustmentForTourStep, adjustment);
+        return this.calculatedLeftPosition + maxAdjustment;
     }
 
     public get orbLeftPosition(): number {
