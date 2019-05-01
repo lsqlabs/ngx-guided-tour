@@ -1,7 +1,7 @@
 # ngx-guided-tour
 Guided tour component using SASS and typescript. Allows you to use selectors to step your user through workflows and introduce them to your application. Customiziable theme and many features. Heavily inspired by [react-joyride](https://github.com/gilbarbara/react-joyride)
 
-See a quick [https://lsqlabs.github.io/ngx-guided-tour/](https://lsqlabs.github.io/ngx-guided-tour/)
+See a quick demo - [https://lsqlabs.github.io/ngx-guided-tour/](https://lsqlabs.github.io/ngx-guided-tour/)
 
 ## Installation
 
