@@ -9,6 +9,21 @@ See a quick demo - [https://lsqlabs.github.io/ngx-guided-tour/](https://lsqlabs.
 
     `npm install ngx-guided-tour --save`
 
+2. Add modules to app.module.ts
+```typescript
+import {GuidedTourModule, GuidedTourService} from 'ngx-guided-tour';
+
+@NgModule({
+    imports: [
+        GuidedTourModule,
+        ...
+    ],
+    providers: [
+       GuidedTourService,
+       ...
+    ],
+```
+
 ## Usage
 
 Add ngx-guided-tour to your app.component.html .
