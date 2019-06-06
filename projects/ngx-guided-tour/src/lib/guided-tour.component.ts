@@ -46,28 +46,28 @@ import { GuidedTourService } from './guided-tour.service';
                         <button *ngIf="!guidedTourService.onResizeMessage"
                             (click)="guidedTourService.skipTour()"
                             class="skip-button link-button">
-                            Skip
+                            {{ skipText }}
                         </button>
                         <button *ngIf="!guidedTourService.onLastStep && !guidedTourService.onResizeMessage"
                             class="next-button"
                             (click)="guidedTourService.nextStep()">
-                            Next&nbsp;&nbsp;{{ guidedTourService.currentTourStepDisplay }}/{{ guidedTourService.currentTourStepCount }}
+                            {{ nextText }}&nbsp;&nbsp;{{ guidedTourService.currentTourStepDisplay }}/{{ guidedTourService.currentTourStepCount }}
                         </button>
                         <button *ngIf="guidedTourService.onLastStep"
                             class="next-button"
                             (click)="guidedTourService.nextStep()">
-                            Done
+                            {{ doneText }}
                         </button>
 
                         <button *ngIf="guidedTourService.onResizeMessage"
                             class="next-button"
                             (click)="guidedTourService.resetTour()">
-                            Close
+                            {{ closeText }}
                         </button>
                         <button *ngIf="!guidedTourService.onFirstStep && !guidedTourService.onResizeMessage"
                             class="back-button link-button"
                             (click)="guidedTourService.backStep()">
-                            Back
+                            {{ backText }}
                         </button>
                     </div>
                 </div>
@@ -81,6 +81,11 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
     @Input() public topOfPageAdjustment ?= 0;
     @Input() public tourStepWidth ?= 300;
     @Input() public minimalTourStepWidth ?= 200;
+    @Input() public skipText ?= 'Skip';
+    @Input() public nextText ?= 'Next';
+    @Input() public doneText ?= 'Done';
+    @Input() public closeText ?= 'Close';
+    @Input() public backText ?= 'Back';
     @ViewChild('tourStep') public tourStep: ElementRef;
     public highlightPadding = 4;
     public currentTourStep: TourStep = null;
