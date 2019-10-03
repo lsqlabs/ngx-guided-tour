@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { Orientation, TourStep, ProgressIndicatorLocation } from './guided-tour.constants';
 import { GuidedTourService } from './guided-tour.service';
@@ -37,9 +37,9 @@ import { GuidedTourService } from './guided-tour.service';
                 <div class="tour-block">
                     <div *ngIf="
                         progressIndicatorLocation === progressIndicatorLocations.TopOfTourBlock && 
-                        !guidedTourService.onLastStep && !guidedTourService.onResizeMessage
+                        !guidedTourService.onResizeMessage
                     " class="tour-progress-indicator">
-                        {{ guidedTourService.currentTourStepDisplay }}/{{ guidedTourService.currentTourStepCount }}
+                        <ng-container *ngTemplateOutlet="progress"></ng-container>
                     </div>
                     <h3 class="tour-title" *ngIf="currentTourStep.title && currentTourStep.selector">
                         {{ currentTourStep.title }}
@@ -59,7 +59,7 @@ import { GuidedTourService } from './guided-tour.service';
                             (click)="guidedTourService.nextStep()">
                             {{ nextText }}
                             <ng-container *ngIf="progressIndicatorLocation === progressIndicatorLocations.InsideNextButton">
-                                &nbsp;&nbsp;{{ guidedTourService.currentTourStepDisplay }}/{{ guidedTourService.currentTourStepCount }}
+                                <ng-container *ngTemplateOutlet="progress"></ng-container>
                             </ng-container>
                         </button>
                         <button *ngIf="guidedTourService.onLastStep"
@@ -82,6 +82,18 @@ import { GuidedTourService } from './guided-tour.service';
                 </div>
             </div>
         </div>
+        <ng-template #progress>
+            <ng-container *ngTemplateOutlet="
+                progressIndicator || defaultProgressIndicator; 
+                context: { currentStepNumber: guidedTourService.currentTourStepDisplay, totalSteps: guidedTourService.currentTourStepCount }
+            "></ng-container> 
+        </ng-template>
+        <ng-template #defaultProgressIndicator let-currentStepNumber="currentStepNumber" let-totalSteps="totalSteps">
+            <ng-container *ngIf="progressIndicatorLocation === progressIndicatorLocations.InsideNextButton">
+                &nbsp;&nbsp;
+            </ng-container>
+            {{ currentStepNumber }}/{{ totalSteps }}
+        </ng-template>
     `,
     styleUrls: ['./guided-tour.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -96,6 +108,7 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
     @Input() public closeText ?= 'Close';
     @Input() public backText ?= 'Back';
     @Input() public progressIndicatorLocation?: ProgressIndicatorLocation = ProgressIndicatorLocation.InsideNextButton;
+    @Input() public progressIndicator?: TemplateRef<any> = undefined;
     @ViewChild('tourStep') public tourStep: ElementRef;
     public highlightPadding = 4;
     public currentTourStep: TourStep = null;
