@@ -53,6 +53,13 @@ interface GuidedTour {
     completeCallback?: () => void;
     /** Minimum size of screen in pixels before the tour is run, if the tour is resized below this value the user will be told to resize */
     minimumScreenSize?: number;
+    /** Dialog shown if the window width is smaller than the defined minimum screen size. */
+    resizeDialog?: {
+        /** Resize dialog title text */
+        title?: string;
+        /** Resize dialog text */
+        content: string;
+    }
 }
 ```
 
