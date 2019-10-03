@@ -60,3 +60,9 @@ export class Orientation {
     public static readonly TopLeft = 'top-left';
     public static readonly TopRight = 'top-right';
 }
+
+export enum ProgressIndicatorLocation {
+    InsideNextButton = 'inside-next-button',
+    TopOfTourBlock = 'top-of-tour-block',
+    None = 'none',
+}  
