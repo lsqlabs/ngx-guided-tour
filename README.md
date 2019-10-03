@@ -136,6 +136,25 @@ topOfPageAdjustment (optional) - Used to adjust values to determine scroll. This
 
 tourStepWidth (optional) - Sets the width of tour steps.
 
+minimalTourStepWidth (optional) - The minimal width of tour steps.
+
+skipText (optional) - The text of the skip button.
+
+nextText (optional) - The text of the next button.
+
+doneText (optional) - The text of the done button (button on the last step).
+
+closeText (optional) - The text of the close button (shown on the resize popup).
+
+backText (optional) - The text of the back button.
+
+progressIndicatorLocation (optional) - The location of the progress indicator (e.g. "1/5"). It can be placed inside the next button (default), at the top of the tour block or hidden. If set to ProgressIndicatorLocation.TopOfTourBlock the indicator will be shown on all steps. If it's shown inside the next button, it will be hidden on the last step.
+
+progressIndicator (optional) - A ng-template to customize the progress indicator (e.g. "1/5"). The following context is provided:  
+    - currentStepNumber: The number of the current step (starting with 1)  
+    - totalSteps: The total number of steps
+
+
 ## Style variables
 These SASS variables have default values, but they can be set to customize the tour elements. Define them before importing guided-tour-base-theme.scss .
 
