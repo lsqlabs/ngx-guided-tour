@@ -89,10 +89,7 @@ import { GuidedTourService } from './guided-tour.service';
             "></ng-container> 
         </ng-template>
         <ng-template #defaultProgressIndicator let-currentStepNumber="currentStepNumber" let-totalSteps="totalSteps">
-            <ng-container *ngIf="progressIndicatorLocation === progressIndicatorLocations.InsideNextButton">
-                &nbsp;&nbsp;
-            </ng-container>
-            {{ currentStepNumber }}/{{ totalSteps }}
+            <ng-container *ngIf="progressIndicatorLocation === progressIndicatorLocations.InsideNextButton">&nbsp;</ng-container>{{ currentStepNumber }}/{{ totalSteps }}
         </ng-template>
     `,
     styleUrls: ['./guided-tour.component.scss'],
