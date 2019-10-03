@@ -36,9 +36,9 @@ import { GuidedTourService } from './guided-tour.service';
                 <div *ngIf="currentTourStep.selector" class="tour-arrow"></div>
                 <div class="tour-block">
                     <div *ngIf="
-                        progressIndicatorLocation === progressIndicatorLocations.TopOfTourBlock && 
-                        !guidedTourService.onResizeMessage
-                    " class="tour-progress-indicator">
+                        progressIndicatorLocation === progressIndicatorLocations.TopOfTourBlock
+                        && !guidedTourService.onResizeMessage"
+                    class="tour-progress-indicator">
                         <ng-container *ngTemplateOutlet="progress"></ng-container>
                     </div>
                     <h3 class="tour-title" *ngIf="currentTourStep.title && currentTourStep.selector">
