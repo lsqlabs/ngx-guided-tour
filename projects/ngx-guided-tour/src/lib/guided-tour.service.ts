@@ -27,10 +27,12 @@ export class GuidedTourService {
             if (this._currentTour && this._currentTourStepIndex > -1) {
                 if (this._currentTour.minimumScreenSize && this._currentTour.minimumScreenSize >= window.innerWidth) {
                     this._onResizeMessage = true;
-                    this._guidedTourCurrentStepSubject.next({
+                    const dialog = this._currentTour.resizeDialog || {
                         title: 'Please resize',
                         content: 'You have resized the tour to a size that is too small to continue. Please resize the browser to a larger size to continue the tour or close the tour.'
-                    });
+                    };
+
+                    this._guidedTourCurrentStepSubject.next(dialog);
                 } else {
                     this._onResizeMessage = false;
                     this._guidedTourCurrentStepSubject.next(this.getPreparedTourStep(this._currentTourStepIndex));
