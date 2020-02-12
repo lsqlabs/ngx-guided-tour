@@ -1,8 +1,10 @@
 import { debounceTime } from 'rxjs/internal/operators';
-import { ErrorHandler, Injectable } from '@angular/core';
+import { ErrorHandler, Inject, Injectable } from '@angular/core';
 import { Observable, Subject, fromEvent } from 'rxjs';
 import { GuidedTour, TourStep, Orientation, OrientationConfiguration } from './guided-tour.constants';
 import { cloneDeep } from 'lodash';
+import { DOCUMENT } from "@angular/common";
+import { WindowRefService } from "./windowref.service";
 
 @Injectable()
 export class GuidedTourService {
@@ -18,14 +20,16 @@ export class GuidedTourService {
     private _onResizeMessage = false;
 
     constructor(
-        public errorHandler: ErrorHandler
+        public errorHandler: ErrorHandler,
+        private windowRef: WindowRefService,
+        @Inject(DOCUMENT) private dom
     ) {
         this.guidedTourCurrentStepStream = this._guidedTourCurrentStepSubject.asObservable();
         this.guidedTourOrbShowingStream = this._guidedTourOrbShowingSubject.asObservable();
 
-        fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe(() => {
+        fromEvent(this.windowRef.nativeWindow, 'resize').pipe(debounceTime(200)).subscribe(() => {
             if (this._currentTour && this._currentTourStepIndex > -1) {
-                if (this._currentTour.minimumScreenSize && this._currentTour.minimumScreenSize >= window.innerWidth) {
+                if (this._currentTour.minimumScreenSize && this._currentTour.minimumScreenSize >= this.windowRef.nativeWindow.innerWidth) {
                     this._onResizeMessage = true;
                     const dialog = this._currentTour.resizeDialog || {
                         title: 'Please resize',
@@ -109,7 +113,7 @@ export class GuidedTourService {
     }
 
     public resetTour(): void {
-        document.body.classList.remove('tour-open');
+        this.dom.body.classList.remove('tour-open');
         this._currentTour = null;
         this._currentTourStepIndex = 0;
         this._guidedTourCurrentStepSubject.next(null);
@@ -124,10 +128,10 @@ export class GuidedTourService {
         if (
             this._currentTour.steps.length > 0
             && (!this._currentTour.minimumScreenSize
-                || (window.innerWidth >= this._currentTour.minimumScreenSize))
+                || (this.windowRef.nativeWindow.innerWidth >= this._currentTour.minimumScreenSize))
         ) {
             if (!this._currentTour.useOrb) {
-                document.body.classList.add('tour-open');
+                this.dom.body.classList.add('tour-open');
             }
             if (this._currentTour.steps[this._currentTourStepIndex].action) {
                 this._currentTour.steps[this._currentTourStepIndex].action();
@@ -142,7 +146,7 @@ export class GuidedTourService {
 
     public activateOrb(): void {
         this._guidedTourOrbShowingSubject.next(false);
-        document.body.classList.add('tour-open');
+        this.dom.body.classList.add('tour-open');
     }
 
     private _setFirstAndLast(): void {
@@ -152,7 +156,7 @@ export class GuidedTourService {
 
     private _checkSelectorValidity(): boolean {
         if (this._currentTour.steps[this._currentTourStepIndex].selector) {
-            const selectedElement = document.querySelector(this._currentTour.steps[this._currentTourStepIndex].selector);
+            const selectedElement = this.dom.querySelector(this._currentTour.steps[this._currentTourStepIndex].selector);
             if (!selectedElement) {
                 this.errorHandler.handleError(
                     // If error handler is configured this should not block the browser.
@@ -212,7 +216,7 @@ export class GuidedTourService {
             let currentOrientation: Orientation = Orientation.Top;
             (convertedStep.orientation as OrientationConfiguration[]).forEach(
                 (orientationConfig: OrientationConfiguration) => {
-                    if (!orientationConfig.maximumSize || window.innerWidth <= orientationConfig.maximumSize) {
+                    if (!orientationConfig.maximumSize || this.windowRef.nativeWindow.innerWidth <= orientationConfig.maximumSize) {
                         currentOrientation = orientationConfig.orientationDirection;
                     }
                 }

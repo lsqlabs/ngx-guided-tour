@@ -3,6 +3,7 @@ import { GuidedTourComponent } from './guided-tour.component';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders } from '@angular/compiler/src/core';
+import { WindowRefService } from "./windowref.service";
 
 @NgModule({
     declarations: [
@@ -10,6 +11,9 @@ import { ModuleWithProviders } from '@angular/compiler/src/core';
     ],
     imports: [
         CommonModule
+    ],
+    providers: [
+        WindowRefService
     ],
     exports: [
         GuidedTourComponent

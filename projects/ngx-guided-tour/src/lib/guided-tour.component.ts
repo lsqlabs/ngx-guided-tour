@@ -1,7 +1,9 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, ViewEncapsulation, TemplateRef, Inject } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 import { Orientation, TourStep, ProgressIndicatorLocation } from './guided-tour.constants';
 import { GuidedTourService } from './guided-tour.service';
+import { WindowRefService } from "./windowref.service";
 
 @Component({
     selector: 'ngx-guided-tour',
@@ -117,7 +119,9 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
     private scrollSubscription: Subscription;
 
     constructor(
-        public guidedTourService: GuidedTourService
+        public guidedTourService: GuidedTourService,
+        private windowRef: WindowRefService,
+        @Inject(DOCUMENT) private dom: any
     ) { }
 
     private get maxWidthAdjustmentForTourStep(): number {
@@ -132,8 +136,8 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
         if (this.calculatedLeftPosition < 0) {
             adjustment = -this.calculatedLeftPosition;
         }
-        if (this.calculatedLeftPosition > window.innerWidth - this.tourStepWidth) {
-            adjustment = this.calculatedLeftPosition - (window.innerWidth - this.tourStepWidth);
+        if (this.calculatedLeftPosition > this.windowRef.nativeWindow.innerWidth - this.tourStepWidth) {
+            adjustment = this.calculatedLeftPosition - (this.windowRef.nativeWindow.innerWidth - this.tourStepWidth);
         }
 
         return Math.min(this.maxWidthAdjustmentForTourStep, adjustment);
@@ -147,7 +151,7 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
         this.guidedTourService.guidedTourCurrentStepStream.subscribe((step: TourStep) => {
             this.currentTourStep = step;
             if (step && step.selector) {
-                const selectedElement = document.querySelector(step.selector);
+                const selectedElement = this.dom.querySelector(step.selector);
                 if (selectedElement) {
                     this.scrollToAndSetElement();
                 } else {
@@ -162,11 +166,11 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
             this.isOrbShowing = value;
         });
 
-        this.resizeSubscription = fromEvent(window, 'resize').subscribe(() => {
+        this.resizeSubscription = fromEvent(this.windowRef.nativeWindow, 'resize').subscribe(() => {
             this.updateStepLocation();
         });
 
-        this.scrollSubscription = fromEvent(window, 'scroll').subscribe(() => {
+        this.scrollSubscription = fromEvent(this.windowRef.nativeWindow, 'scroll').subscribe(() => {
             this.updateStepLocation();
         });
     }
@@ -183,37 +187,37 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
             if (!this.isOrbShowing && !this.isTourOnScreen()) {
                 if (this.selectedElementRect && this.isBottom()) {
                     // Scroll so the element is on the top of the screen.
-                    const topPos = ((window.scrollY + this.selectedElementRect.top) - this.topOfPageAdjustment)
+                    const topPos = ((this.windowRef.nativeWindow.scrollY + this.selectedElementRect.top) - this.topOfPageAdjustment)
                         - (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)
                         + this.getStepScreenAdjustment();
                     try {
-                        window.scrollTo({
+                        this.windowRef.nativeWindow.scrollTo({
                             left: null,
                             top: topPos,
                             behavior: 'smooth'
                         });
                     } catch (err) {
                         if (err instanceof TypeError) {
-                            window.scroll(0, topPos);
+                            this.windowRef.nativeWindow.scroll(0, topPos);
                         } else {
                             throw err;
                         }
                     }
                 } else {
                     // Scroll so the element is on the bottom of the screen.
-                    const topPos = (window.scrollY + this.selectedElementRect.top + this.selectedElementRect.height)
-                        - window.innerHeight
+                    const topPos = (this.windowRef.nativeWindow.scrollY + this.selectedElementRect.top + this.selectedElementRect.height)
+                        - this.windowRef.nativeWindow.innerHeight
                         + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)
                         - this.getStepScreenAdjustment();
                     try {
-                        window.scrollTo({
+                        this.windowRef.nativeWindow.scrollTo({
                             left: null,
                             top: topPos,
                             behavior: 'smooth'
                         });
                     } catch (err) {
                         if (err instanceof TypeError) {
-                            window.scroll(0, topPos);
+                            this.windowRef.nativeWindow.scroll(0, topPos);
                         } else {
                             throw err;
                         }
@@ -232,7 +236,7 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
 
     private isTourOnScreen(): boolean {
         return this.tourStep
-            && this.elementInViewport(document.querySelector(this.currentTourStep.selector))
+            && this.elementInViewport(this.dom.querySelector(this.currentTourStep.selector))
             && this.elementInViewport(this.tourStep.nativeElement);
     }
 
@@ -247,16 +251,16 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
         }
         if (this.isBottom()) {
             return (
-                top >= (window.pageYOffset
+                top >= (this.windowRef.nativeWindow.pageYOffset
                     + this.topOfPageAdjustment
                     + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)
                     + this.getStepScreenAdjustment())
-                && (top + height) <= (window.pageYOffset + window.innerHeight)
+                && (top + height) <= (this.windowRef.nativeWindow.pageYOffset + this.windowRef.nativeWindow.innerHeight)
             );
         } else {
             return (
-                top >= (window.pageYOffset + this.topOfPageAdjustment - this.getStepScreenAdjustment())
-                && (top + height + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)) <= (window.pageYOffset + window.innerHeight)
+                top >= (this.windowRef.nativeWindow.pageYOffset + this.topOfPageAdjustment - this.getStepScreenAdjustment())
+                && (top + height + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)) <= (this.windowRef.nativeWindow.pageYOffset + this.windowRef.nativeWindow.innerHeight)
             );
         }
     }
@@ -271,8 +275,8 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
 
     public updateStepLocation(): void {
         if (this.currentTourStep && this.currentTourStep.selector) {
-            const selectedElement = document.querySelector(this.currentTourStep.selector);
-            if (selectedElement) {
+            const selectedElement = this.dom.querySelector(this.currentTourStep.selector);
+            if (selectedElement && typeof selectedElement.getBoundingClientRect === 'function') {
                 this.selectedElementRect = (selectedElement.getBoundingClientRect() as DOMRect);
             } else {
                 this.selectedElementRect = null;
@@ -461,12 +465,13 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
         ) {
             return 0;
         }
-        const elementHeight = this.selectedElementRect.height
-            + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)
-            + this.tourStep.nativeElement.getBoundingClientRect().height;
 
-        if ((window.innerHeight - this.topOfPageAdjustment) < elementHeight) {
-            return elementHeight - (window.innerHeight - this.topOfPageAdjustment);
+        const scrollAdjustment = this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0;
+        const tourStepHeight = typeof this.tourStep.nativeElement.getBoundingClientRect === 'function' ? this.tourStep.nativeElement.getBoundingClientRect().height : 0;
+        const elementHeight = this.selectedElementRect.height + scrollAdjustment + tourStepHeight;
+
+        if ((this.windowRef.nativeWindow.innerHeight - this.topOfPageAdjustment) < elementHeight) {
+            return elementHeight - (this.windowRef.nativeWindow.innerHeight - this.topOfPageAdjustment);
         }
         return 0;
     }
