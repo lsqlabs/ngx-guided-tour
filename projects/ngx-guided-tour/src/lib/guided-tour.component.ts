@@ -108,7 +108,7 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
     @Input() public backText ?= 'Back';
     @Input() public progressIndicatorLocation?: ProgressIndicatorLocation = ProgressIndicatorLocation.InsideNextButton;
     @Input() public progressIndicator?: TemplateRef<any> = undefined;
-    @ViewChild('tourStep') public tourStep: ElementRef;
+    @ViewChild('tourStep', { static: false }) public tourStep: ElementRef;
     public highlightPadding = 4;
     public currentTourStep: TourStep = null;
     public selectedElementRect: DOMRect = null;
