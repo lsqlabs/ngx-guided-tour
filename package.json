@@ -5,6 +5,7 @@
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",
+        "build:all": "ng build && npm run build:lib",
         "build:lib": "ng build ngx-guided-tour && npm run build:lib:scss && npm run build:lib:css",
         "build:lib:css": "node-sass ./projects/ngx-guided-tour/src/lib/guided-tour-base-theme.scss -o ./dist/ngx-guided-tour/css/ && node-sass ./projects/ngx-guided-tour/src/lib/guided-tour.component.scss -o ./dist/ngx-guided-tour/css/",
         "build:lib:scss": "mkdir ./dist/ngx-guided-tour/scss/ && cp ./projects/ngx-guided-tour/src/lib/guided-tour-base-theme.scss ./dist/ngx-guided-tour/scss/guided-tour-base-theme.scss && cp ./projects/ngx-guided-tour/src/lib/guided-tour.component.scss ./dist/ngx-guided-tour/scss/guided-tour.component.scss",
