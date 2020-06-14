@@ -1,35 +1,21 @@
 import { GuidedTourService } from './guided-tour.service';
 import { GuidedTourComponent } from './guided-tour.component';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders } from '@angular/compiler/src/core';
-import { WindowRefService } from "./windowref.service";
+import { WindowRefService } from './windowref.service';
 
 @NgModule({
-    declarations: [
-        GuidedTourComponent
-    ],
-    imports: [
-        CommonModule
-    ],
-    providers: [
-        WindowRefService
-    ],
-    exports: [
-        GuidedTourComponent
-    ],
-    entryComponents: [
-        GuidedTourComponent
-    ]
+  declarations: [GuidedTourComponent],
+  imports: [CommonModule],
+  providers: [WindowRefService],
+  exports: [GuidedTourComponent],
+  entryComponents: [GuidedTourComponent],
 })
 export class GuidedTourModule {
-    public static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: GuidedTourModule,
-            providers: [
-                ErrorHandler,
-                GuidedTourService
-            ]
-        };
-    }
+  public static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: GuidedTourModule,
+      providers: [ErrorHandler, GuidedTourService],
+    };
+  }
 }
