@@ -1,8 +1,7 @@
 import { GuidedTourService } from './guided-tour.service';
 import { GuidedTourComponent } from './guided-tour.component';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders } from '@angular/compiler/src/core';
 
 @NgModule({
     declarations: [
