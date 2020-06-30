@@ -1,4 +1,4 @@
-import { debounceTime } from 'rxjs/internal/operators';
+import { debounceTime } from 'rxjs/operators';
 import { ErrorHandler, Inject, Injectable } from '@angular/core';
 import { Observable, Subject, fromEvent } from 'rxjs';
 import { GuidedTour, TourStep, Orientation, OrientationConfiguration } from './guided-tour.constants';
