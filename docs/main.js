@@ -772,30 +772,17 @@ var GuidedTourModule = /** @class */ (function () {
     GuidedTourModule.forRoot = function () {
         return {
             ngModule: GuidedTourModule_1,
-            providers: [
-                _angular_core__WEBPACK_IMPORTED_MODULE_3__["ErrorHandler"],
-                _guided_tour_service__WEBPACK_IMPORTED_MODULE_1__["GuidedTourService"]
-            ]
+            providers: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["ErrorHandler"], _guided_tour_service__WEBPACK_IMPORTED_MODULE_1__["GuidedTourService"]],
         };
     };
     var GuidedTourModule_1;
     GuidedTourModule = GuidedTourModule_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["NgModule"])({
-            declarations: [
-                _guided_tour_component__WEBPACK_IMPORTED_MODULE_2__["GuidedTourComponent"]
-            ],
-            imports: [
-                _angular_common__WEBPACK_IMPORTED_MODULE_4__["CommonModule"]
-            ],
-            providers: [
-                _windowref_service__WEBPACK_IMPORTED_MODULE_5__["WindowRefService"]
-            ],
-            exports: [
-                _guided_tour_component__WEBPACK_IMPORTED_MODULE_2__["GuidedTourComponent"]
-            ],
-            entryComponents: [
-                _guided_tour_component__WEBPACK_IMPORTED_MODULE_2__["GuidedTourComponent"]
-            ]
+            declarations: [_guided_tour_component__WEBPACK_IMPORTED_MODULE_2__["GuidedTourComponent"]],
+            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["CommonModule"]],
+            providers: [_windowref_service__WEBPACK_IMPORTED_MODULE_5__["WindowRefService"]],
+            exports: [_guided_tour_component__WEBPACK_IMPORTED_MODULE_2__["GuidedTourComponent"]],
+            entryComponents: [_guided_tour_component__WEBPACK_IMPORTED_MODULE_2__["GuidedTourComponent"]],
         })
     ], GuidedTourModule);
     return GuidedTourModule;
@@ -816,8 +803,7 @@ var GuidedTourModule = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GuidedTourService", function() { return GuidedTourService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var rxjs_internal_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/internal/operators */ "./node_modules/rxjs/internal/operators/index.js");
-/* harmony import */ var rxjs_internal_operators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs_internal_operators__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var _guided_tour_constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./guided-tour.constants */ "./projects/ngx-guided-tour/src/lib/guided-tour.constants.ts");
@@ -848,7 +834,7 @@ var GuidedTourService = /** @class */ (function () {
         this._onResizeMessage = false;
         this.guidedTourCurrentStepStream = this._guidedTourCurrentStepSubject.asObservable();
         this.guidedTourOrbShowingStream = this._guidedTourOrbShowingSubject.asObservable();
-        Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["fromEvent"])(this.windowRef.nativeWindow, 'resize').pipe(Object(rxjs_internal_operators__WEBPACK_IMPORTED_MODULE_1__["debounceTime"])(200)).subscribe(function () {
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["fromEvent"])(this.windowRef.nativeWindow, 'resize').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["debounceTime"])(200)).subscribe(function () {
             if (_this._currentTour && _this._currentTourStepIndex > -1) {
                 if (_this._currentTour.minimumScreenSize && _this._currentTour.minimumScreenSize >= _this.windowRef.nativeWindow.innerWidth) {
                     _this._onResizeMessage = true;
