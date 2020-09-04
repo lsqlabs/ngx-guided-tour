@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
     ]
 })
 export class NgxGuidedTourModule {
-    public static forRoot(): ModuleWithProviders {
+    public static forRoot(): ModuleWithProviders<NgxGuidedTourModule> {
         return {
             ngModule: NgxGuidedTourModule,
             providers: [
