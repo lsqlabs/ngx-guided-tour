@@ -6,7 +6,7 @@ import { cloneDeep } from 'lodash';
 import { DOCUMENT } from "@angular/common";
 import { WindowRefService } from "./windowref.service";
 
-@Injectable()
+@Injectable({ providedIn: '' })
 export class GuidedTourService {
     public guidedTourCurrentStepStream: Observable<TourStep>;
     public guidedTourOrbShowingStream: Observable<boolean>;
