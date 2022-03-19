@@ -12,7 +12,7 @@ import { WindowRefService } from './windowref.service';
   entryComponents: [GuidedTourComponent],
 })
 export class GuidedTourModule {
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<GuidedTourModule> {
     return {
       ngModule: GuidedTourModule,
       providers: [ErrorHandler, GuidedTourService],
