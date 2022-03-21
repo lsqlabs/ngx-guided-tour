@@ -176,8 +176,8 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.resizeSubscription.unsubscribe();
-        this.scrollSubscription.unsubscribe();
+        this.resizeSubscription?.unsubscribe();
+        this.scrollSubscription?.unsubscribe();
     }
 
     public scrollToAndSetElement(): void {
