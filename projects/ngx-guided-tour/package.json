@@ -1,6 +1,6 @@
 {
     "name": "ngx-guided-tour",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Guided tour for your Angular applications.",
     "peerDependencies": {
         "@angular/common": ">=13.0.0",
@@ -39,5 +39,13 @@
         "entryFile": "src/public_api.ts"
       },
       "dest": "../../dist/ngx-guided-tour"
+    },
+    "exports": {
+      "./scss/guided-tour-base-theme.scss": {
+        "default": "./scss/guided-tour-base-theme.scss"
+      },
+      "./scss/guided-tour.component.scss": {
+        "default": "./scss/guided-tour.component.scss"
+      }
     }
 }
