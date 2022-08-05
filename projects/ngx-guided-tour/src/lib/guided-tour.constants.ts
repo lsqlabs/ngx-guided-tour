@@ -9,9 +9,9 @@ export interface TourStep {
     /** Where the tour step will appear next to the selected element */
     orientation?: Orientation | OrientationConfiguration[];
     /** Action that happens when the step is opened */
-    action?: () => void;
+    action?: () => Promise<boolean>;
     /** Action that happens when the step is closed */
-    closeAction?: () => void;
+    closeAction?: () => Promise<boolean>;
     /** Skips this step, this is so you do not have create multiple tour configurations based on user settings/configuration */
     skipStep?: boolean;
     /** Adds some padding for things like sticky headers when scrolling to an element */
@@ -20,6 +20,8 @@ export interface TourStep {
     useHighlightPadding?: boolean;
     /** Adds padding around tour highlighting in pixels, this overwrites the default for this step. Is not dependent on useHighlightPadding being true */
     highlightPadding?: number;
+    /** Delay in ms after action/closeAction completed */
+    postActionDelay?: number;
 }
 
 export interface GuidedTour {

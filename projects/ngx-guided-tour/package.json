@@ -1,6 +1,6 @@
 {
     "name": "ngx-guided-tour",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "Guided tour for your Angular applications.",
     "peerDependencies": {
         "@angular/common": ">=13.0.0",

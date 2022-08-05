@@ -45,15 +45,17 @@ export class GuidedTourService {
         });
     }
 
-    public nextStep(): void {
-        if (this._currentTour.steps[this._currentTourStepIndex].closeAction) {
-            this._currentTour.steps[this._currentTourStepIndex].closeAction();
+    public async nextStep() {
+        const currentStep = this._currentTour.steps[this._currentTourStepIndex]
+        if (currentStep.closeAction) {
+            await currentStep.closeAction();
         }
-        if (this._currentTour.steps[this._currentTourStepIndex + 1]) {
+        const nextStep = this._currentTour.steps[this._currentTourStepIndex + 1]
+        if (nextStep) {
             this._currentTourStepIndex++;
             this._setFirstAndLast();
-            if (this._currentTour.steps[this._currentTourStepIndex].action) {
-                this._currentTour.steps[this._currentTourStepIndex].action();
+            if (nextStep.action) {
+                await nextStep.action();
                 // Usually an action is opening something so we need to give it time to render.
                 setTimeout(() => {
                     if (this._checkSelectorValidity()) {
@@ -61,7 +63,7 @@ export class GuidedTourService {
                     } else {
                         this.nextStep();
                     }
-                });
+                }, nextStep.postActionDelay);
             } else {
                 if (this._checkSelectorValidity()) {
                     this._guidedTourCurrentStepSubject.next(this.getPreparedTourStep(this._currentTourStepIndex));
@@ -77,22 +79,24 @@ export class GuidedTourService {
         }
     }
 
-    public backStep(): void {
-        if (this._currentTour.steps[this._currentTourStepIndex].closeAction) {
-            this._currentTour.steps[this._currentTourStepIndex].closeAction();
+    public async backStep() {
+        const currentStep = this._currentTour.steps[this._currentTourStepIndex]
+        if (currentStep.closeAction) {
+            await currentStep.closeAction();
         }
-        if (this._currentTour.steps[this._currentTourStepIndex - 1]) {
+        const prevStep = this._currentTour.steps[this._currentTourStepIndex - 1]
+        if (prevStep) {
             this._currentTourStepIndex--;
             this._setFirstAndLast();
-            if (this._currentTour.steps[this._currentTourStepIndex].action) {
-                this._currentTour.steps[this._currentTourStepIndex].action();
+            if (prevStep.action) {
+                await prevStep.action();
                 setTimeout(() => {
                     if (this._checkSelectorValidity()) {
                         this._guidedTourCurrentStepSubject.next(this.getPreparedTourStep(this._currentTourStepIndex));
                     } else {
                         this.backStep();
                     }
-                });
+                }, prevStep.postActionDelay);
             } else {
                 if (this._checkSelectorValidity()) {
                     this._guidedTourCurrentStepSubject.next(this.getPreparedTourStep(this._currentTourStepIndex));
@@ -119,7 +123,7 @@ export class GuidedTourService {
         this._guidedTourCurrentStepSubject.next(null);
     }
 
-    public startTour(tour: GuidedTour): void {
+    public async startTour(tour: GuidedTour) {
         this._currentTour = cloneDeep(tour);
         this._currentTour.steps = this._currentTour.steps.filter(step => !step.skipStep);
         this._currentTourStepIndex = 0;
@@ -134,7 +138,7 @@ export class GuidedTourService {
                 this.dom.body.classList.add('tour-open');
             }
             if (this._currentTour.steps[this._currentTourStepIndex].action) {
-                this._currentTour.steps[this._currentTourStepIndex].action();
+                await this._currentTour.steps[this._currentTourStepIndex].action();
             }
             if (this._checkSelectorValidity()) {
                 this._guidedTourCurrentStepSubject.next(this.getPreparedTourStep(this._currentTourStepIndex));

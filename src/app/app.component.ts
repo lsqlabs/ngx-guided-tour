@@ -25,6 +25,11 @@ export class AppComponent {
                 content: 'We have the concept of general page steps so that a you can introuce a user to a page or non specific instructions',
             },
             {
+                title: 'General page step with an async action',
+                content: 'We have the concept of general page steps so that a you can introduce a user to a page or non specific instructions',
+                action: () => new Promise<any>(resolve => setTimeout(() => resolve(true), 1000))
+            },
+            {
                 title: 'Positioning',
                 selector: '.tour-middle-content',
                 content: 'Step position can be set so that steps are always in view. This step is on the left.',
