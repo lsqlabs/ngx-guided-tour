@@ -103,6 +103,11 @@ Then use the `GuidedTourService` to to start your tour by calling `GuidedTourSer
 
 If a selector is not found, the step will be skipped.
 
+## Publishing Updates to npm
+1. Make sure you are logged in via cli to the npm account that owns the package (if you work at LSQ Funding, check the 1Password vault).
+2. Increment the version number in [projects/ngx-guided-tour/package.json](https://github.com/lsqlabs/ngx-guided-tour/blob/master/projects/ngx-guided-tour/package.json) appropriately.
+2. `npm run build:lib`
+3. `npm run publish`
 ## TourStep Interface
 
 selector (optional) - If no selector is present then the tour will show a step in the middle of the page. If a selector is set but not found, it will skip the step.
