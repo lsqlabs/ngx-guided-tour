@@ -29,7 +29,7 @@ ngx-guided-tour {
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          animation: pulse 2s linear infinite;
+          animation: tour-orb-pulse 2s linear infinite;
 
           &:after {
               content: '';
@@ -40,7 +40,7 @@ ngx-guided-tour {
           }
       }
 
-      @keyframes pulse {
+      @keyframes tour-orb-pulse {
           from {
               transform: translate(-50%, -50%) scale(0.45);
               opacity: 1.0;
