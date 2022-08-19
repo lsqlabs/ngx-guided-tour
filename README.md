@@ -7,7 +7,7 @@ See a quick demo - [https://lsqlabs.github.io/ngx-guided-tour/](https://lsqlabs.
 
 1. Install npm module:
 
-    `npm install ngx-guided-tour --save`
+   `npm install ngx-guided-tour --save`
 
 2. Add modules to app.module.ts
 ```typescript
@@ -19,15 +19,15 @@ import {GuidedTourModule, GuidedTourService} from 'ngx-guided-tour';
         ...
     ],
     providers: [
-       GuidedTourService,
-       ...
+        GuidedTourService,
+        ...
     ],
 ```
 
 ## Usage
 
 Add ngx-guided-tour to your app.component.html .
-    
+
 ```html
 <ngx-guided-tour></ngx-guided-tour>
 ```
@@ -64,6 +64,7 @@ interface GuidedTour {
 ```
 
 and steps:
+
 ```typescript
 interface TourStep {
     /** Selector for element that will be highlighted */
@@ -75,9 +76,9 @@ interface TourStep {
     /** Where the tour step will appear next to the selected element */
     orientation?: Orientation | OrientationConfiguration[];
     /** Action that happens when the step is opened */
-    action?: () => void;
+    action?: () => Promise<boolean>;
     /** Action that happens when the step is closed */
-    closeAction?: () => void;
+    closeAction?: () => Promise<boolean>;
     /** Skips this step, this is so you do not have create multiple tour configurations based on user settings/permissions */
     skipStep?: boolean;
     /** Adds some padding for things like sticky headers when scrolling to an element */
@@ -86,6 +87,8 @@ interface TourStep {
     useHighlightPadding?: boolean;
     /** Adds padding around tour highlighting in pixels, this overwrites the default for this step. Is not dependent on useHighlightPadding being true */
     highlightPadding?: number;
+    /** Delay in ms after action/closeAction completed */
+    postActionDelay?: number;
 }
 ```
 
@@ -163,8 +166,8 @@ backText (optional) - The text of the back button.
 progressIndicatorLocation (optional) - The location of the progress indicator (e.g. "1/5"). It can be placed inside the next button (default), at the top of the tour block or hidden. If set to ProgressIndicatorLocation.TopOfTourBlock the indicator will be shown on all steps. If it's shown inside the next button, it will be hidden on the last step.
 
 progressIndicator (optional) - A ng-template to customize the progress indicator (e.g. "1/5"). The following context is provided:  
-    - currentStepNumber: The number of the current step (starting with 1)  
-    - totalSteps: The total number of steps
+- currentStepNumber: The number of the current step (starting with 1)  
+- totalSteps: The total number of steps
 
 
 ## Style variables
