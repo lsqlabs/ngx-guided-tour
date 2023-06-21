@@ -110,82 +110,82 @@ If a selector is not found, the step will be skipped.
 3. `npm run publish`
 ## TourStep Interface
 
-selector (optional) - If no selector is present then the tour will show a step in the middle of the page. If a selector is set but not found, it will skip the step.
+`selector (optional)` - If no selector is present then the tour will show a step in the middle of the page. If a selector is set but not found, it will skip the step.
 
-title (optional) - Title that shows on the top of the step.
+`title (optional)` - Title that shows on the top of the step.
 
-content - Content of the tourstep. Uses inner html so tags will work.
+`content` - Content of the tourstep. Uses inner html so tags will work.
 
-orientation (optional) - Defaults to top. Accepts bottom, bottomLeft, bottomRight, center, left, right, top, topLeft, and topRight. Can be taken from the guided-tour.constants.ts file. This also supports a array of OrientationConfiguration. When an array of OrientationConfiguration is passed to it, it will use the smallest maximumSize the screen can fit into. This is useful for tablet or mobile flexing. It will also change when the user resizes the screen.
+`orientation (optional)` - Defaults to top. Accepts bottom, bottomLeft, bottomRight, center, left, right, top, topLeft, and topRight. Can be taken from the guided-tour.constants.ts file. This also supports a array of OrientationConfiguration. When an array of OrientationConfiguration is passed to it, it will use the smallest maximumSize the screen can fit into. This is useful for tablet or mobile flexing. It will also change when the user resizes the screen.
 
-action (optional) - Function called at the beginning of step. This is executed before the tour step is rendered allowing for content to appear.
+`action (optional)` - Function called at the beginning of step. This is executed before the tour step is rendered allowing for content to appear.
 
-closeAction (optional) - Function called after step is ended.
+`closeAction (optional)` - Function called after step is ended.
 
-scrollAdjustment (optional) - Number used to adjust where to scroll to on a step and when to scroll.
+`scrollAdjustment (optional)` - Number used to adjust where to scroll to on a step and when to scroll.
 
-useHighlightPadding (optional) - Adds some extra padding around the highlight for elements that may need just a little more on the highlight.
+`useHighlightPadding (optional)` - Adds some extra padding around the highlight for elements that may need just a little more on the highlight.
 
 ## GuidedTour Interface
 
-tourId - unique Identifer string
+`tourId` - unique Identifer string
 
-useOrb (optional) - Use orb to start tour. The tour will start when the user hovers over the orb. The orb is based on the positioning of the first step.
+`useOrb (optional)` - Use orb to start tour. The tour will start when the user hovers over the orb. The orb is based on the positioning of the first step.
 
-steps - List of TourSteps that the tour steps through.
+`steps` - List of TourSteps that the tour steps through.
 
-skipCallback (optional) - Function called when the tour is skipped. Passes the index of the step that was skipped on.
+`skipCallback (optional)` - Function called when the tour is skipped. Passes the index of the step that was skipped on.
 
-completeCallback (optional) - Function is called when the tour is completed (done is pressed).
+`completeCallback (optional)` - Function is called when the tour is completed (done is pressed).
 
-minimumScreenSize (optional) - Will enforce a minimum size before the tour will start (in pixels). If the window is resized below this size during a tour a message will inform the user to expand their browser.
+`minimumScreenSize (optional)` - Will enforce a minimum size before the tour will start (in pixels). If the window is resized below this size during a tour a message will inform the user to expand their browser.
 
-preventBackdropFromAdvancing (optional) - Prevents the tour from advancing by clicking the backdrop. This should only be set if you are completely sure your tour is displaying correctly on all screen sizes otherwise a user can get stuck.
+`preventBackdropFromAdvancing (optional)` - Prevents the tour from advancing by clicking the backdrop. This should only be set if you are completely sure your tour is displaying correctly on all screen sizes otherwise a user can get stuck.
 
 ## ngx-guided-tour component inputs
 
-topOfPageAdjustment (optional) - Used to adjust values to determine scroll. This is a blanket value to adjust for things like nav bars.
+`topOfPageAdjustment (optional)` - Used to adjust values to determine scroll. This is a blanket value to adjust for things like nav bars.
 
-tourStepWidth (optional) - Sets the width of tour steps.
+`tourStepWidth (optional)` - Sets the width of tour steps.
 
-minimalTourStepWidth (optional) - The minimal width of tour steps.
+`minimalTourStepWidth (optional)` - The minimal width of tour steps.
 
-skipText (optional) - The text of the skip button.
+`skipText (optional)` - The text of the skip button.
 
-nextText (optional) - The text of the next button.
+`nextText (optional)` - The text of the next button.
 
-doneText (optional) - The text of the done button (button on the last step).
+`doneText (optional)` - The text of the done button (button on the last step).
 
-closeText (optional) - The text of the close button (shown on the resize popup).
+`closeText (optional)` - The text of the close button (shown on the resize popup).
 
-backText (optional) - The text of the back button.
+`backText (optional)` - The text of the back button.
 
-progressIndicatorLocation (optional) - The location of the progress indicator (e.g. "1/5"). It can be placed inside the next button (default), at the top of the tour block or hidden. If set to ProgressIndicatorLocation.TopOfTourBlock the indicator will be shown on all steps. If it's shown inside the next button, it will be hidden on the last step.
+`progressIndicatorLocation (optional)` - The location of the progress indicator (e.g. "1/5"). It can be placed inside the next button (default), at the top of the tour block or hidden. If set to ProgressIndicatorLocation.TopOfTourBlock the indicator will be shown on all steps. If it's shown inside the next button, it will be hidden on the last step.
 
-progressIndicator (optional) - A ng-template to customize the progress indicator (e.g. "1/5"). The following context is provided:  
-    - currentStepNumber: The number of the current step (starting with 1)  
-    - totalSteps: The total number of steps
+`progressIndicator (optional)` - A ng-template to customize the progress indicator (e.g. "1/5"). The following context is provided:  
+    - `currentStepNumber`: The number of the current step (starting with 1)  
+    - `totalSteps`: The total number of steps
 
 
 ## Style variables
 These SASS variables have default values, but they can be set to customize the tour elements. Define them before importing guided-tour-base-theme.scss .
 
-$tour-skip-link-color : Skip button color.
+`$tour-skip-link-color` : Skip button color.
 
-$tour-text-color : Color of the text that is in the tour step box.
+`$tour-text-color` : Color of the text that is in the tour step box.
 
-$tour-next-text-color : Next button text color.
+`$tour-next-text-color` : Next button text color.
 
-$tour-zindex : Base z-index for the tour.
+`$tour-zindex` : Base z-index for the tour.
 
-$tour-orb-color : Color of the orb to start a tour.
+`$tour-orb-color` : Color of the orb to start a tour.
 
-$tour-next-button-color : Next button color.
+`$tour-next-button-color` : Next button color.
 
-$tour-next-button-hover : Next button hover color.
+`$tour-next-button-hover` : Next button hover color.
 
-$tour-back-button-color : Back button color.
+`$tour-back-button-color` : Back button color.
 
-$tour-shadow-color : Shadow backdrop that is used for the tour.
+`$tour-shadow-color` : Shadow backdrop that is used for the tour.
 
-$tour-step-color : Background color for the tour step box.
+`$tour-step-color` : Background color for the tour step box.
