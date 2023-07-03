@@ -184,43 +184,33 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
         this.updateStepLocation();
         // Allow things to render to scroll to the correct location
         setTimeout(() => {
-            if (!this.isOrbShowing && !this.isTourOnScreen()) {
-                if (this.selectedElementRect && this.isBottom()) {
+            if (!this.isOrbShowing && !this.isTourOnScreen() && this.selectedElementRect) {
+                let topPos;
+
+                if (this.isBottom()) {
                     // Scroll so the element is on the top of the screen.
-                    const topPos = ((this.windowRef.nativeWindow.scrollY + this.selectedElementRect.top) - this.topOfPageAdjustment)
+                    topPos = ((this.windowRef.nativeWindow.scrollY + this.selectedElementRect.top) - this.topOfPageAdjustment)
                         - (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)
                         + this.getStepScreenAdjustment();
-                    try {
-                        this.windowRef.nativeWindow.scrollTo({
-                            left: null,
-                            top: topPos,
-                            behavior: 'smooth'
-                        });
-                    } catch (err) {
-                        if (err instanceof TypeError) {
-                            this.windowRef.nativeWindow.scroll(0, topPos);
-                        } else {
-                            throw err;
-                        }
-                    }
                 } else {
                     // Scroll so the element is on the bottom of the screen.
-                    const topPos = (this.windowRef.nativeWindow.scrollY + this.selectedElementRect.top + this.selectedElementRect.height)
+                    topPos = (this.windowRef.nativeWindow.scrollY + this.selectedElementRect.top + this.selectedElementRect.height)
                         - this.windowRef.nativeWindow.innerHeight
                         + (this.currentTourStep.scrollAdjustment ? this.currentTourStep.scrollAdjustment : 0)
                         - this.getStepScreenAdjustment();
-                    try {
-                        this.windowRef.nativeWindow.scrollTo({
-                            left: null,
-                            top: topPos,
-                            behavior: 'smooth'
-                        });
-                    } catch (err) {
-                        if (err instanceof TypeError) {
-                            this.windowRef.nativeWindow.scroll(0, topPos);
-                        } else {
-                            throw err;
-                        }
+                }
+
+                try {
+                    this.windowRef.nativeWindow.scrollTo({
+                        left: null,
+                        top: topPos,
+                        behavior: 'smooth'
+                    });
+                } catch (err) {
+                    if (err instanceof TypeError) {
+                        this.windowRef.nativeWindow.scroll(0, topPos);
+                    } else {
+                        throw err;
                     }
                 }
             }
